@@ -145,6 +145,11 @@ _G.packer_plugins = {
     path = "/home/jpikon/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-treesitter-angular"] = {
+    loaded = true,
+    path = "/home/jpikon/.local/share/nvim/site/pack/packer/start/nvim-treesitter-angular",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-angular"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/jpikon/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
