@@ -1,3 +1,16 @@
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -9,24 +22,12 @@ return require('packer').startup(function(use)
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use 'AlexvZyl/nordic.nvim'
-
+  use { "catppuccin/nvim", as = "catppuccin" }
   use 'ThePrimeagen/vim-be-good'
 
   use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
-  }
-  use "nvim-treesitter/nvim-treesitter-angular"
-
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
-    config = function()
-      require("nvim-tree").setup {}
-    end
   }
 
   use {
@@ -35,9 +36,6 @@ return require('packer').startup(function(use)
       vim.o.timeout = true
       vim.o.timeoutlen = 300
       require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
       }
     end
   }
@@ -71,5 +69,10 @@ return require('packer').startup(function(use)
 
   use('jose-elias-alvarez/null-ls.nvim')
   use('MunifTanjim/prettier.nvim')
-  use('terryma/vim-multiple-cursors')
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
